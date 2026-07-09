@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: carpool-rideshare
+    datasource:
+        url: jdbc:postgresql://localhost:5432/rideshare
+        username: ${DB_USERNAME:rideshare_user}
+        password: ${DB_PASSWORD:devpassword}
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true        
+
+server:
+    port: 8080
+
+
