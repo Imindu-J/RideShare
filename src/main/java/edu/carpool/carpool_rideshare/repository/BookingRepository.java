@@ -1,0 +1,10 @@
+package edu.carpool.carpool_rideshare.repository;
+
+import edu.carpool.carpool_rideshare.entity.Booking;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface BookingRepository extends JpaRepository<Booking, Long> {
+    List<Booking> findByRideId(Long rideId);
+    List<Booking> findByRiderId(Long riderId);   // powers the "my history" endpoint
+}
