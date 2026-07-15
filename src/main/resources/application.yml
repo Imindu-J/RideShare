@@ -1,3 +1,6 @@
+server:
+    port: 8080
+
 spring:
     application:
         name: carpool-rideshare
@@ -8,12 +11,12 @@ spring:
     jpa:
         hibernate:
             ddl-auto: validate
-        show-sql: true 
+        show-sql: true
     flyway:
         enabled: true
-        locations: classpath:/db/migration       
+        locations: classpath:/db/migration
 
-server:
-    port: 8080
-
-
+app:
+    jwt:
+        secret: ${JWT_SECRET:this-is-a-temporary-loccal-dev-secret-change-ne-123456789}
+        expiration-ms: 86400000
