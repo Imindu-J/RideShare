@@ -1,11 +1,12 @@
 package edu.carpool.carpool_rideshare.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import edu.carpool.carpool_rideshare.dto.CreateVehicleRequest;
 import edu.carpool.carpool_rideshare.entity.User;
 import edu.carpool.carpool_rideshare.entity.Vehicle;
-import edu.carpool.carpool_rideshare.exception.UnauthorizedActionException;
 import edu.carpool.carpool_rideshare.repository.VehicleRepository;
 import edu.carpool.carpool_rideshare.security.CurrentUserProvider;
 
@@ -22,11 +23,7 @@ public class VehicleService {
     }
 
     public Vehicle createVehicle(CreateVehicleRequest request){
-        User owner = request.getOwner();
-
-        if (!owner.getId().equals(currentUserProvider.getCurrentUser().getId())){
-            throw new UnauthorizedActionException("You can only list your own vehicles.");
-        }
+        User owner =currentUserProvider.getCurrentUser();
 
         Vehicle vehicle = new Vehicle();
         vehicle.setOwner(owner);
@@ -36,6 +33,11 @@ public class VehicleService {
 
         return vehicleRepository.save(vehicle);
 
+    }
+
+    public List<Vehicle> getMyVehicls(){
+        User owner = currentUserProvider.getCurrentUser();
+        return vehicleRepository.findByOwnerId(owner.getId());
     }
 
     
