@@ -44,13 +44,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             email = jwtService.extractEmail(token);
+            System.out.println("DEBUG: extracted email = " + email);
         } catch (Exception w){
+            System.out.print("DEBUG: Jwt extraction failed: " + w.getClass().getSimpleName()+" - " + w.getMessage());
             filterChain.doFilter(request, response);
             return;
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+            System.out.println("DEBUG: Token valid: " + jwtService.isTokenValid(token, email));
 
             if (jwtService.isTokenValid(token, email)){
                 UsernamePasswordAuthenticationToken authToken = 

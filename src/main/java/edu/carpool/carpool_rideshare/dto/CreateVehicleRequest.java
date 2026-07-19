@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateVehicleRequest {
 
-    @NotNull
-    private Long vehicleId;
-
     private String model;
 
     @NotNull
@@ -16,9 +13,6 @@ public class CreateVehicleRequest {
     private int totalSeats;
 
     // getters and setters
-    public Long getVehicleId() { return this.vehicleId; }
-    public void setVehicleId(Long id){ this.vehicleId = id; }
-
     public String getModel(){ return this.model; }
     public void setModel( String model) { this.model = model; }
 
