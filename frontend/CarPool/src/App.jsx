@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react";
-import api from './api/axios';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
-function App(){
-  const [health, setHealth] = useState('checking...');
 
-  useEffect(() => {
-    api.get('/health')
-      .then((res) => setHealth(res.data))
-      .catch((err) => setHealth('ERROR: ' + err.message));
-  }, []);
+function ProtectedRoute({ children }){
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" />
+}
 
+function App() {
   return (
-    <div>
-      <h1>Backend health check: {health}</h1>
-    </div>
-  );
-
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="/rides"
+        element={
+          <ProtectedRoute>
+            <div>Ride list goes here</div>
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/rides" />} />
+    </Routes>
+  )
 }
 
 export default App;
+
